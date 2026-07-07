@@ -1,7 +1,10 @@
 #pragma once
 
+#include "BuildMode.hpp"
+#include "Platform.hpp"
+
 #ifdef KDEBUG
-#if defined _MSC_VER && not defined(__clang__)
+#if defined KCOMPILER_MSVC && not defined(KCOMPILER_CLANG)
 #define BREAKPOINT() __debugbreak()
 #else
 #define BREAKPOINT() __builtin_trap()
