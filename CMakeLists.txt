@@ -6,33 +6,28 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Define Project Name
-project(KEngine VERSION 0.0.1 LANGUAGES CXX)
+project(KUtils VERSION 1.0.0 LANGUAGES CXX)
 
-# Define output build folder
-set(OUTPUT_DIR_BASE "${CMAKE_SOURCE_DIR}/Builds/${CMAKE_CXX_COMPILER_ID}_$<CONFIG>")
+# Add as interface
+add_library(KUtils INTERFACE)
 
-# Define Output Build path for libraries & executable
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT_DIR_BASE}/Libs")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_DIR_BASE}/Libs")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR_BASE}")
+add_library(KUtils::KUtils ALIAS KUtils)
 
-# Disable C and C++ compiler extensions.
-set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_CXX_EXTENSIONS OFF)
+target_include_directories(KUtils INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>
+    $<INSTALL_INTERFACE:include>
+)
 
+include(GNUInstallDirs)
 
+install(TARGETS KUtils
+    EXPORT KUtilsTarget
+)
 
-# --------------------------------------- #
-#              SUB DIRECTORIES            #
-# --------------------------------------- #
-set (LINK_RHI ON CACHE BOOL "Link the RHI module")
-add_subdirectory(Engine)
-add_subdirectory(Editor)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-
-
-# --------------------------------------- #
-#              ENABLE TESTING             #
-# --------------------------------------- #
-# Enable CTests
-enable_testing()
+install(EXPORT KUtilsTarget
+    FILE KUtils.cmake
+    NAMESPACE KUtils::
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/KUtils/cmake
+)
