@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Platform.hpp"
 #include "Debug.hpp"
+#include "Platform.hpp"
+
 
 // Inline
 #if defined(KCOMPILER_CLANG) || defined(KCOMPILER_GCC)
@@ -16,18 +17,18 @@
 #if defined(KCOMPILER_CLANG) || defined(KCOMPILER_GCC)
     #define KNO_INLINE __attribute__((noinline))
 #elif defined(KCOMPILER_MSVC)
-    #define KAYOU_NO_INLINE __declspec(noinline)
+    #define KNO_INLINE __declspec(noinline)
 #else
-#define KNO_INLINE
+    #define KNO_INLINE
 #endif
 
 /// NoDiscard
 #if defined(__has_cpp_attribute)
     #if __has_cpp_attribute(nodiscard)
-#define KNO_DISCARD [[nodiscard]]
-#else
-    #define KNO_DISCARD
-#endif
+        #define KNO_DISCARD [[nodiscard]]
+    #else
+        #define KNO_DISCARD
+    #endif
 #else
     #define KNO_DISCARD
 #endif
@@ -66,14 +67,14 @@
 
 /// Likely / Unlikely : Branch prediction hints (C++20)
 #if defined(__has_cpp_attribute)
-#if __has_cpp_attribute(likely)
-#define KLIKELY [[likely]]
-#define KUNLIKELY [[unlikely]]
+    #if __has_cpp_attribute(likely)
+        #define KLIKELY [[likely]]
+        #define KUNLIKELY [[unlikely]]
+    #else
+        #define KLIKELY
+        #define KUNLIKELY
+    #endif
 #else
-#define KLIKELY
-#define KUNLIKELY
-#endif
-#else
-#define KLIKELY
-#define KUNLIKELY
+    #define KLIKELY
+    #define KUNLIKELY
 #endif

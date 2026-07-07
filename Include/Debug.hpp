@@ -3,11 +3,13 @@
 #include "BuildMode.hpp"
 #include "Platform.hpp"
 
+
 #ifdef KDEBUG
-#if defined KCOMPILER_MSVC && not defined(KCOMPILER_CLANG)
-#define BREAKPOINT() __debugbreak()
-#else
-#define BREAKPOINT() __builtin_trap()
+	#if defined KCOMPILER_MSVC && not defined(KCOMPILER_CLANG)
+		#define BREAKPOINT() __debugbreak()
+	#else
+		#define BREAKPOINT() __builtin_trap()
+	#endif
 #endif
 
 #ifdef KDEBUG
