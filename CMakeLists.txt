@@ -24,7 +24,7 @@ install(TARGETS KUtils
     EXPORT KUtilsTarget
 )
 
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY Include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(EXPORT KUtilsTarget
     FILE KUtils.cmake
